@@ -1,5 +1,5 @@
 import ROOT
-import DatacardCreator.AnalysisCategories.AnalysisCategoryDef as AnalysisCategoryDef
+import AnalysisCategories.AnalysisCategoryDef as AnalysisCategoryDef
 
 def IsInInclusiveCategory(theAnalysisCategory,theEventDictionary):
     isGoodEvent = False
@@ -9,6 +9,9 @@ def IsInInclusiveCategory(theAnalysisCategory,theEventDictionary):
     return isGoodEvent
 
 MTInclusive = AnalysisCategoryDef.AnalysisCategory()
-MTInclusive.Name = "Inclusive"
+MTInclusive.name = "Inclusive"
 MTInclusive.IsInCategory = IsInInclusiveCategory
-
+MTInclusive.rollingVariable = "TauPt"
+MTInclusive.rollingBins = [0.0,9000.0]
+MTInclusive.reconstructionVariable = "MVis"
+MTInclusive.reconstructionBins = [50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0]

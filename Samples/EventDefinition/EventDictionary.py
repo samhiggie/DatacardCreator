@@ -24,7 +24,19 @@ class EventDictionary():
         raise RuntimeError("Default Constructed Quantity Function! Define a way to fill all basic Quantities and replace this function with it!")
     #this will fill both the basic and the constructed quantities for the nominal values provided
     #the weight of the event will have to be handled later by the sample (may need fake factors, so the sample will decide)
-    def CreateCompleteDictionary(self,theTree):
-        self.FillBasicQuantities(theTree)
-        self.FillConstructedQuantities(self.basicQuantities)
-        self.eventDictionary = {**self.basicQuantities,**self.constructedQuantities}
+    def CreateCompleteEvent(self,theTree):
+        self.FillBasicQuantities(self,theTree)
+        self.FillConstructedQuantities(self,self.basicQuantities)        
+        self.CompileCompleteDictionary()
+    def CompileCompleteDictionary(self):
+        self.eventDictionary = self.basicQuantities.copy()
+        self.eventDictionary.update(self.constructedQuantities)
+    def Clone(self):
+        clonedEventDictionary = EventDictionary()
+        clonedEventDictionary.basicQuantities = self.basicQuantities.copy()
+        clonedEventDictionary.constructedQuantities = self.constructedQuantities.copy()
+        clonedEventDictionary.eventDictionary = self.eventDictionary.copy()
+        clonedEventDictionary.FillBasicQuantities = self.FillBasicQuantities
+        clonedEventDictionary.FillConstructedQuantities = self.FillConstructedQuantities
+        clonedEventDictionary.Weight = self.Weight
+        return clonedEventDictionary
