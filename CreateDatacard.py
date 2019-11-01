@@ -49,26 +49,47 @@ if __name__ == "__main__":
         print("Processing sample: "+outputSample.name)
         outputSample.InitializeSample()
         outputSample.InitializeAllHistograms(analysisCategories)
-        for i in tqdm(range(outputSample.chain.GetEntries())):
+        #some debug
+        numEntries = outputSample.chain.GetEntries()
+        if outputSample.name == 'Embedded':
+            numEntries = 100000
+        for i in tqdm(range(numEntries)):
             outputSample.chain.GetEntry(i)
             outputSample.ProcessEvent(outputSample.chain,analysisCategories)
     #we should now be done with all of our samples, all histograms filled.
     #let's get them, unroll them, and store them away.
     #start with making the directories we're going to want.
     outputFile = ROOT.TFile(args.OutputFileName,"RECREATE")    
-    directories = {}
+    directories = {}    
     for analysisCategory in analysisCategories:
         directories[analysisCategory.name] = outputFile.mkdir(analysisCategory.name)
     #now for each sample get the complete dictionary of histograms
+    completeHistogramDictionary = {}
+    for analysisCategory in analysisCategories:
+        completeHistogramDictionary[analysisCategory.name] = {}
     for outputSample in outputSamples:
-        theOutputHistograms = outputSample.GetAllHistograms()
+        theSampleHistograms = outputSample.GetAllHistograms()
         #once we have that, loop over the analysis categories and unroll each of the contained lists
         for analysisCategory in analysisCategories:
-            theOutputHistograms[analysisCategory.name] = theUnroller.UnrollHistogramList(theOutputHistograms[analysisCategory.name])
-            #Okay, now we unrolled all our histograms, let's write them all out to the proper directory
-            directories[analysisCategory.name].cd()
-            for histogram in theOutputHistograms[analysisCategory.name]:
-                histogram.Write()
+            theSampleHistograms[analysisCategory.name] = theUnroller.UnrollHistogramDictionary(theSampleHistograms[analysisCategory.name])
+            for histogram in theSampleHistograms[analysisCategory.name]:
+                completeHistogramDictionary[analysisCategory.name][histogram] = theSampleHistograms[analysisCategory.name][histogram]
+
+    #Okay, now we unrolled all our histograms and combined them, 
+    #if we have any final things to do (addition/subtraction) let's do them now
+    for outputSample in outputSamples:    
+        for analysisCategory in analysisCategories:
+            #let's first see if the outputSample has any final actions it would like taken
+            #before any of the histograms get written out.
+            try:
+                outputSample.EndAction(completeHistogramDictionary,analysisCategory)
+            except AttributeError:
+                pass
+    #now let's write
+    for analysisCategory in analysisCategories:
+        directories[analysisCategory.name].cd()
+        for histogram in completeHistogramDictionary[analysisCategory.name]:
+            completeHistogramDictionary[analysisCategory.name][histogram].Write()
     
             
         

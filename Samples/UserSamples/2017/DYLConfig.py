@@ -11,7 +11,7 @@ from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import M
 
 DYLSample = Sample()
 DYLSample.name = 'DYL'
-DYLSample.path = '/data/aloeliger/SMHTT_Selected_2018_Deep/'
+DYLSample.path = '/data/aloeliger/SMHTT_Selected_2017_Deep/'
 DYLSample.files = ['DY.root']
 DYLSample.definition = 'gen_match_2 < 5'
 DYLSample.uncertainties = [

@@ -30,7 +30,8 @@ class Sample():
         self.chain = ROOT.TChain("mt_Selected")
         for theFile in self.files:
             self.chain.Add(self.path+theFile)
-        self.chain = self.chain.CopyTree(self.definition)
+        if self.definition != '':
+            self.chain = self.chain.CopyTree(self.definition)
     #default function to be replaced that defines how to weight the event
     #this will be replaced by the user in configuration, but I'll also provide
     # the two most common default ones I would use
@@ -40,7 +41,7 @@ class Sample():
     def CreateEventWeight_Standard(self,theEventDictionary,theTree):
         theEventDictionary.Weight = theTree.FinalWeighting
     def CreateEventWeight_Fake(self,theEventDictionary,theTree):
-        theEventDictionary.Weight = theTree.FinalWeighting * theTree.FinalWeighting.Event_Fake_Factor
+        theEventDictionary.Weight = theTree.FinalWeighting * theTree.Event_Fake_Factor
     # create a quick list of nominal histograms for each analysis category
     def CreateNominalHistograms(self,analysisCategories):
         for analysisCategory in analysisCategories:
@@ -52,12 +53,12 @@ class Sample():
     def GetAllHistograms(self):
         completeHistogramDictionary = {}
         for analysisCategoryName in self.nominalHistograms:
-            histogramList = []
-            histogramList.append(self.nominalHistograms[analysisCategoryName]) # this retrieves the nominal histogram
+            histogramDictionary = {}
+            histogramDictionary[self.name]=self.nominalHistograms[analysisCategoryName] # this retrieves the nominal histogram
             for uncertainty in self.uncertainties:                
-                for upDownName in uncertainty.histograms[analysisCategoryName]:
-                    histogramList.append(uncertainty.histograms[analysisCategoryName][upDownName])
-            completeHistogramDictionary[analysisCategoryName] = histogramList
+                for upDownName in uncertainty.histograms[analysisCategoryName]:                    
+                    histogramDictionary[self.name+"_"+upDownName]=uncertainty.histograms[analysisCategoryName][upDownName]
+            completeHistogramDictionary[analysisCategoryName] = histogramDictionary
         return completeHistogramDictionary
 
     #this will sort of be the master function for creating and filling histograms

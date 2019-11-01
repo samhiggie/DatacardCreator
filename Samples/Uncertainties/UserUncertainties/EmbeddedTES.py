@@ -1,29 +1,26 @@
-#do I want to do this as an inheriting class, instead of an instance?
-#Probably. Multiple distributions are going to need their own TES uncertainties 
-#
-
 from Samples.Uncertainties.UncertaintyDef import Uncertainty
 import ROOT
 
-class TESUncertainty(Uncertainty):
+class EmbeddedTESUncertainty(Uncertainty):
     def __init__(self):
-        self.name = 'TES'
+        self.name = 'EmbeddedTES'
         self.uncertaintyNames = [
-            "CMS_scale_t_1prongUp",
-            "CMS_scale_t_1prongDown",
-            "CMS_scale_t_1prong1pizeroUp",
-            "CMS_scale_t_1prong1pizeroDown",
-            "CMS_scale_t_3prongUp",
-            "CMS_scale_t_3prongDown"
-            ]        
+            "CMS_scale_emb_t_1prongUp",
+            "CMS_scale_emb_t_1prongDown",
+            "CMS_scale_emb_t_1prong1pizeroUp",
+            "CMS_scale_emb_t_1prong1pizeroDown",
+            "CMS_scale_emb_t_3prongUp",
+            "CMS_scale_emb_t_3prongDown"
+            ]
         self.eventDictionaryModifications = {
-            "CMS_scale_t_1prongUp":self.CreateOneProngUpModifiedDictionary,
-            "CMS_scale_t_1prongDown":self.CreateOneProngDownModifiedDictionary,
-            "CMS_scale_t_1prong1pizeroUp":self.CreateOneProngOnePizeroUpModifiedDictionary,
-            "CMS_scale_t_1prong1pizeroDown":self.CreateOneProngOnePizeroDownModifiedDictionary,
-            "CMS_scale_t_3prongUp":self.CreateThreeProngUpModifiedDictionary,
-            "CMS_scale_t_3prongDown":self.CreateThreeProngDownModifiedDictionary
-        }
+            "CMS_scale_emb_t_1prongUp":self.CreateOneProngUpModifiedDictionary,
+            "CMS_scale_emb_t_1prongDown":self.CreateOneProngDownModifiedDictionary,
+            "CMS_scale_emb_t_1prong1pizeroUp":self.CreateOneProngOnePizeroUpModifiedDictionary,
+            "CMS_scale_emb_t_1prong1pizeroDown":self.CreateOneProngOnePizeroDownModifiedDictionary,
+            "CMS_scale_emb_t_3prongUp":self.CreateThreeProngUpModifiedDictionary,
+            "CMS_scale_emb_t_3prongDown":self.CreateThreeProngDownModifiedDictionary
+            }
+
     def CreateOneProngUpModifiedDictionary(self,theTree,nominalEventDictionary):
         tauVectorUp = ROOT.TLorentzVector()
         metVectorUp = ROOT.TLorentzVector()
@@ -179,3 +176,4 @@ class TESUncertainty(Uncertainty):
         modifiedEventDictionary.CompileCompleteDictionary()
         
         return modifiedEventDictionary
+

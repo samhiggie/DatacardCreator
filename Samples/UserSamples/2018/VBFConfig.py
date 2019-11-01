@@ -1,26 +1,26 @@
 from Samples.SampleDefinition import Sample
 
 from Samples.Uncertainties.UserUncertainties.TES import TESUncertainty
-from Samples.Uncertainties.UserUncertainties.ZPT import ZPTUncertainty
-from Samples.Uncertainties.UserUncertainties.ZLShape import ZLShapeUncertainty
 from Samples.Uncertainties.UserUncertainties.JES import JESUncertainty
 from Samples.Uncertainties.UserUncertainties.MetRecoil import MetRecoilUncertainty
 from Samples.Uncertainties.UserUncertainties.MuonES import MuonESUncertainty
+from Samples.Uncertainties.UserUncertainties.TauID import TauIDUncertainty
+from Samples.Uncertainties.UserUncertainties.Trigger17_18 import Trigger1718Uncertainty
 
 from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import MuTauEventDictionary
 
-DYLSample = Sample()
-DYLSample.name = 'DYL'
-DYLSample.path = '/data/aloeliger/SMHTT_Selected_2018_Deep/'
-DYLSample.files = ['DY.root']
-DYLSample.definition = 'gen_match_2 < 5'
-DYLSample.uncertainties = [
+VBFSample = Sample()
+VBFSample.name = 'qqH_htt125'
+VBFSample.path = '/data/aloeliger/SMHTT_Selected_2018_Deep/'
+VBFSample.files = ['VBF.root']
+VBFSample.definition = ''
+VBFSample.uncertainties = [
     TESUncertainty(),
-    ZPTUncertainty(),
     JESUncertainty(),
     MetRecoilUncertainty(),
     MuonESUncertainty(),
-    ZLShapeUncertainty(),
+    TauIDUncertainty(),
+    Trigger1718Uncertainty(),
 ]
-DYLSample.eventDictionaryInstance = MuTauEventDictionary
-DYLSample.CreateEventWeight = DYLSample.CreateEventWeight_Standard
+VBFSample.eventDictionaryInstance = MuTauEventDictionary
+VBFSample.CreateEventWeight = VBFSample.CreateEventWeight_Standard

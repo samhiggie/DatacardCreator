@@ -23,7 +23,7 @@ class HistogramUnroller():
         return NewHisto
     
     #function for unrolling lists of histograms.
-    def UnrollHistogramList(self,listOfHistograms):
-        for i in range(len(listOfHistograms)):
-            listOfHistograms[i] = self.UnrollHistogram(listOfHistograms[i])
-        return listOfHistograms
+    def UnrollHistogramDictionary(self,dictionaryOfHistograms):
+        for histogram in dictionaryOfHistograms:
+            dictionaryOfHistograms[histogram] = self.UnrollHistogram(dictionaryOfHistograms[histogram])
+        return dictionaryOfHistograms
