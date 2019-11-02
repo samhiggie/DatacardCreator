@@ -9,16 +9,16 @@ from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import M
 
 #subtraction and final histogram creation
 def PerformTTbarContaminationSubtraction(theOutputHistograms,analysisCategory):    
-    EmbeddedHistogram = theOutputHistograms[analysisCategory.name]["Embedded_CMS_htt_emb_ttbar"]
+    EmbeddedHistogram = theOutputHistograms[analysisCategory.name]["embedded_CMS_htt_emb_ttbar"]
     TTContaminationHistogram = theOutputHistograms[analysisCategory.name]["TTContamination_CMS_htt_emb_ttbar"]
     EmbeddedHistogram_Up = EmbeddedHistogram.Clone()
-    EmbeddedHistogram_Up.SetNameTitle("Embedded_CMS_htt_emb_ttbarUp","Embedded_CMS_htt_emb_ttbarUp")
+    EmbeddedHistogram_Up.SetNameTitle("embedded_CMS_htt_emb_ttbarUp","embedded_CMS_htt_emb_ttbarUp")
     EmbeddedHistogram_Up.Add(TTContaminationHistogram)
     EmbeddedHistogram_Down = EmbeddedHistogram.Clone()
-    EmbeddedHistogram_Down.SetNameTitle("Embedded_CMS_htt_emb_ttbarDown","Embedded_CMS_htt_emb_ttbarDown")
+    EmbeddedHistogram_Down.SetNameTitle("embedded_CMS_htt_emb_ttbarDown","embedded_CMS_htt_emb_ttbarDown")
     EmbeddedHistogram_Down.Add(TTContaminationHistogram,-1.0)
-    theOutputHistograms[analysisCategory.name]["Embedded_CMS_htt_emb_ttbarUp"] = EmbeddedHistogram_Up
-    theOutputHistograms[analysisCategory.name]["Embedded_CMS_htt_emb_ttbarDown"] = EmbeddedHistogram_Down
+    theOutputHistograms[analysisCategory.name]["embedded_CMS_htt_emb_ttbarUp"] = EmbeddedHistogram_Up
+    theOutputHistograms[analysisCategory.name]["embedded_CMS_htt_emb_ttbarDown"] = EmbeddedHistogram_Down
 
 EmbeddedSample = Sample()
 EmbeddedSample.name = 'embedded'

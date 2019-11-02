@@ -51,8 +51,8 @@ if __name__ == "__main__":
         outputSample.InitializeAllHistograms(analysisCategories)
         #some debug
         numEntries = outputSample.chain.GetEntries()
-        if outputSample.name == 'Embedded':
-            numEntries = 100000
+        #if outputSample.name == 'embedded':
+        #    numEntries = 100000
         for i in tqdm(range(numEntries)):
             outputSample.chain.GetEntry(i)
             outputSample.ProcessEvent(outputSample.chain,analysisCategories)
