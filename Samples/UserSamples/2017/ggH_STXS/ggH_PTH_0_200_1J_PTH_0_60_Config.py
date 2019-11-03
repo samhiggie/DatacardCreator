@@ -12,7 +12,7 @@ from Samples.Uncertainties.UserUncertainties.Trigger17_18 import Trigger1718Unce
 from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import MuTauEventDictionary
 
 ggHSample = Sample()
-ggHSample.name = 'ggH_htt125'
+ggHSample.name = 'ggH_PTH_0_200_1J_PTH_0_60_htt125'
 ggHSample.path = '/data/aloeliger/SMHTT_Selected_2017_Deep/'
 ggHSample.files = ['ggH.root']
 ggHSample.definition = 'Rivet_stage1p1_cat == 111'

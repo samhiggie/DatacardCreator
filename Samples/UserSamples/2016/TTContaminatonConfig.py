@@ -8,7 +8,7 @@ from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import M
 TTContamination = Sample()
 TTContamination.name = 'TTContamination'
 TTContamination.path = '/data/aloeliger/SMHTT_Selected_2016_TTContamination/'
-TTContamination.files = ['TTTo2L2Nu.root','TTToHadronic.root','TTToSemiLeptonic.root']
+TTContamination.files = ['TT.root']
 TTContamination.definition = ''
 TTContamination.uncertainties = [
     TTbarContaminationUncertainty()

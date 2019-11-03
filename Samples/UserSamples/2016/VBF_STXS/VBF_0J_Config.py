@@ -11,7 +11,7 @@ from Samples.Uncertainties.UserUncertainties.Trigger16 import Trigger16Uncertain
 from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import MuTauEventDictionary
 
 VBFSample = Sample()
-VBFSample.name = 'qqH_htt125'
+VBFSample.name = 'qqH_0J_htt125'
 VBFSample.path = '/data/aloeliger/SMHTT_Selected_2016_Deep/'
 VBFSample.files = ['VBF.root']
 VBFSample.definition = 'Rivet_stage1p1_cat == 201'
