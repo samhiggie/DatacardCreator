@@ -10,8 +10,8 @@ from Samples.Uncertainties.UserUncertainties.MuonES import MuonESUncertainty
 from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import MuTauEventDictionary
 
 DYLSample = Sample()
-DYLSample.name = 'DYL'
-DYLSample.path = '/data/aloeliger/SMHTT_Selected_2016_Deep/'
+DYLSample.name = 'ZL'
+DYLSample.path = '/data/aloeliger/SMHTT_Selected_2018_Deep/'
 DYLSample.files = ['DY.root']
 DYLSample.definition = 'gen_match_2 < 5'
 DYLSample.uncertainties = [

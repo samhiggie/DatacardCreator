@@ -7,6 +7,7 @@ from Samples.Uncertainties.UserUncertainties.MetRecoil import MetRecoilUncertain
 from Samples.Uncertainties.UserUncertainties.MuonES import MuonESUncertainty
 from Samples.Uncertainties.UserUncertainties.TauID import TauIDUncertainty
 from Samples.Uncertainties.UserUncertainties.Trigger16 import Trigger16Uncertainty
+from Samples.Uncertainties.UserUncertainties.Prefiring import PrefiringUncertainty
 
 from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import MuTauEventDictionary
 
@@ -23,6 +24,7 @@ ggHSample.uncertainties = [
     MuonESUncertainty(),
     TauIDUncertainty(),
     Trigger16Uncertainty(),
+    PrefiringUncertainty(),
 ]
 ggHSample.eventDictionaryInstance = MuTauEventDictionary
 ggHSample.CreateEventWeight = ggHSample.CreateEventWeight_Standard

@@ -15,7 +15,7 @@ def IsInVBFHighCategory(theAnalysisCategory,theEventDictionary):
     return False
 
 VBFHigh = AnalysisCategoryDef.AnalysisCategory()
-VBFHigh.name = 'mt-vbf_PTH_GE_200'
+VBFHigh.name = 'mt_vbf_PTH_GE_200'
 VBFHigh.IsInCategory = IsInVBFHighCategory
 VBFHigh.rollingVariable = 'mjj'
 VBFHigh.rollingBins = [350.0,700.0,1200.0,10000.0]
