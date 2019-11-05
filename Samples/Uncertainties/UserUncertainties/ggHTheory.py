@@ -112,7 +112,7 @@ class ggHTheoryUncertainty(Uncertainty):
 
     def CreateVBF3jDownDictionary(self,theTree,nominalEventDictionary):
         modifiedEventDictionary = nominalEventDictionary.Clone()
-        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0+theTree.THU_ggH_VBF3j_13TeV))
+        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0-theTree.THU_ggH_VBF3j_13TeV))
         
         return modifiedEventDictionary
 
@@ -124,7 +124,7 @@ class ggHTheoryUncertainty(Uncertainty):
 
     def CreatePT60DownDictionary(self,theTree,nominalEventDictionary):
         modifiedEventDictionary = nominalEventDictionary.Clone()
-        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0+theTree.THU_ggH_PT60_13TeV))
+        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0-theTree.THU_ggH_PT60_13TeV))
         
         return modifiedEventDictionary
 
@@ -136,7 +136,7 @@ class ggHTheoryUncertainty(Uncertainty):
 
     def CreatePT120DownDictionary(self,theTree,nominalEventDictionary):
         modifiedEventDictionary = nominalEventDictionary.Clone()
-        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0+theTree.THU_ggH_PT120_13TeV))
+        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0-theTree.THU_ggH_PT120_13TeV))
 
         return modifiedEventDictionary
 
@@ -148,6 +148,6 @@ class ggHTheoryUncertainty(Uncertainty):
 
     def CreateqmtopDownDictionary(self,theTree,nominalEventDictionary):
         modifiedEventDictionary = nominalEventDictionary.Clone()
-        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0+theTree.THU_ggH_qmtop_13TeV))
+        modifiedEventDictionary.Weight = (theTree.FinalWeighting*(1.0-theTree.THU_ggH_qmtop_13TeV))
 
         return modifiedEventDictionary
