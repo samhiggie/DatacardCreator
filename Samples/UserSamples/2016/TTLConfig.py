@@ -12,7 +12,7 @@ from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import M
 TTLSample = Sample()
 TTLSample.name = 'TTL'
 TTLSample.path = '/data/aloeliger/SMHTT_Selected_2016_Deep/'
-TTLSample.files = ['TTTo2L2Nu.root','TTToHadronic.root','TTToSemiLeptonic.root']
+TTLSample.files = ['TT.root']
 TTLSample.definition = 'gen_match_2 < 5'
 TTLSample.uncertainties = [
     TESUncertainty(),
