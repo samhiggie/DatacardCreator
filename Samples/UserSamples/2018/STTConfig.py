@@ -9,14 +9,15 @@ from Samples.Uncertainties.UserUncertainties.Trigger17_18 import Trigger1718Unce
 
 from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import MuTauEventDictionary
 
-VVSample = Sample()
-VVSample.name = 'VVT'
-VVSample.path = '/data/aloeliger/SMHTT_Selected_2018_Deep/'
-VVSample.files = ['WW.root',
-                  'ZZ.root',
-                  'WZ.root']
-VVSample.definition = '(gen_match_1 == 1 || gen_match_1 == 2) && gen_match_2 == 5'
-VVSample.uncertainties = [
+STSample = Sample()
+STSample.name = 'STT'
+STSample.path = '/data/aloeliger/SMHTT_Selected_2018_Deep/'
+STSample.files = ['ST_t_top.root',
+                  'ST_t_antitop.root',
+                  'ST_tW_top.root',
+                  'ST_tW_antitop.root']
+STSample.definition = '(gen_match_1 == 1 || gen_match_1 == 2) && gen_match_2 == 5'
+STSample.uncertainties = [
     TESUncertainty(),
     JESUncertainty(),
     METUESUncertainty(),
@@ -24,5 +25,5 @@ VVSample.uncertainties = [
     TauIDUncertainty(),
     Trigger1718Uncertainty(),
 ]
-VVSample.eventDictionaryInstance = MuTauEventDictionary
-VVSample.CreateEventWeight = VVSample.CreateEventWeight_Standard
+STSample.eventDictionaryInstance = MuTauEventDictionary
+STSample.CreateEventWeight = STSample.CreateEventWeight_Standard

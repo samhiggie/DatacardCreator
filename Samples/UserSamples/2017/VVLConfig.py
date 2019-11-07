@@ -13,13 +13,7 @@ VVSample.name = 'VVL'
 VVSample.path = '/data/aloeliger/SMHTT_Selected_2017_Deep/'
 VVSample.files = ['WW.root',
                   'ZZ.root',
-                  'WZ.root',
-                  'EWKZLL.root',
-                  'EWKZNuNu.root',
-                  'ST_t_top.root',
-                  'ST_t_antitop.root',
-                  'ST_tW_top.root',
-                  'ST_tW_antitop.root']
+                  'WZ.root']
 VVSample.definition = 'gen_match_2 < 5'
 VVSample.uncertainties = [
     TESUncertainty(),

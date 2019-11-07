@@ -12,7 +12,7 @@ from Samples.EventDefinition.UserEventDictionaries.MuTauEventDictionary import M
 DYLSample = Sample()
 DYLSample.name = 'ZL'
 DYLSample.path = '/data/aloeliger/SMHTT_Selected_2018_Deep/'
-DYLSample.files = ['DY.root']
+DYLSample.files = ['DY.root','EWKZLL.root','EWKZNuNu.root']
 DYLSample.definition = 'gen_match_2 < 5'
 DYLSample.uncertainties = [
     TESUncertainty(),
