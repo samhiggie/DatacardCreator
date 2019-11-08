@@ -25,6 +25,10 @@ class Sample():
         self.eventDictionaryInstance = EventDictionary()
         #this does not need to be user defined
         self.nominalHistograms = {}
+        
+        #define where we want out chain run on.
+        self.startEntry = None
+        self.endEntry = None
     #load the files and trees into a chain.
     def InitializeSample(self):
         self.chain = ROOT.TChain("mt_Selected")

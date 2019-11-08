@@ -50,10 +50,21 @@ if __name__ == "__main__":
         outputSample.InitializeSample()
         outputSample.InitializeAllHistograms(analysisCategories)
         #some debug
-        numEntries = outputSample.chain.GetEntries()
+        #numEntries = outputSample.chain.GetEntries()
         #if outputSample.name == 'embedded':
         #    numEntries = 100000
-        for i in tqdm(range(numEntries)):
+        if outputSample.startEntry != None:
+            chainStart = outputSample.startEntry
+        else:
+            chainStart = 0
+        if outputSample.endEntry != None:
+            if outputSample.endEntry < outputSample.chain.GetEntries():
+                chainEnd = outputSample.endEntry
+            else:
+                chainEnd = outputSample.chain.GetEntries()
+        else:
+            chainEnd = outputSample.chain.GetEntries()
+        for i in tqdm(range(chainStart,chainEnd)):
             outputSample.chain.GetEntry(i)
             outputSample.ProcessEvent(outputSample.chain,analysisCategories)
     #we should now be done with all of our samples, all histograms filled.
