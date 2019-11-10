@@ -18,5 +18,5 @@ ZeroJetHigh.name = 'mt_0jet_PTH_GE10'
 ZeroJetHigh.IsInCategory = IsInZeroJetHighCategory
 ZeroJetHigh.rollingVariable = 'TauPt'
 ZeroJetHigh.rollingBins = [30.0,40.0,50.0,60.0,70.0,10000.0]
-ZeroJetHigh.reconstructionVariable = 'MVis'
-ZeroJetHigh.reconstructionBins = [50.0,60.0,70.0,80.0,90.0,100.0,110.0,120.0,130.0,140.0,150.0,9000.0]
+ZeroJetHigh.reconstructionVariable = 'M_sv'
+ZeroJetHigh.reconstructionBins = [50.0,70.0,90.0,110.0,130.0,150.0,170.0,210.0,250.0,9000.0]
