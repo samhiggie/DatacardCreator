@@ -13,10 +13,10 @@ def PerformTTbarContaminationSubtraction(theOutputHistograms,analysisCategory):
     TTContaminationHistogram = theOutputHistograms[analysisCategory.name]["TTContamination_CMS_htt_emb_ttbar"]
     EmbeddedHistogram_Up = EmbeddedHistogram.Clone()
     EmbeddedHistogram_Up.SetNameTitle("embedded_CMS_htt_emb_ttbarUp","embedded_CMS_htt_emb_ttbarUp")
-    EmbeddedHistogram_Up.Add(TTContaminationHistogram)
+    EmbeddedHistogram_Up.Add(TTContaminationHistogram,0.1)
     EmbeddedHistogram_Down = EmbeddedHistogram.Clone()
     EmbeddedHistogram_Down.SetNameTitle("embedded_CMS_htt_emb_ttbarDown","embedded_CMS_htt_emb_ttbarDown")
-    EmbeddedHistogram_Down.Add(TTContaminationHistogram,-1.0)
+    EmbeddedHistogram_Down.Add(TTContaminationHistogram,-0.1)
     theOutputHistograms[analysisCategory.name]["embedded_CMS_htt_emb_ttbarUp"] = EmbeddedHistogram_Up
     theOutputHistograms[analysisCategory.name]["embedded_CMS_htt_emb_ttbarDown"] = EmbeddedHistogram_Down
 
