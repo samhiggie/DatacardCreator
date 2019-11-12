@@ -6,17 +6,49 @@ This contains the template/master class for the samples. These samples will defi
 and contain/be responsible for the uncertainties on the sample. It also handles the nominal histogram for its sample.
 
 Will require a way to tell what values are in the event (EventDefinition/EventDictionary) and a way to define the
-uncertainties on the sample (Uncertainties).
+uncertainties on the sample (Uncertainties). 
+
+Finally, a master configuration that combines these, and some additional information is needed
 
 ### EventDefinition
 This contains the template/master event dictionary class. This class's responsibility is to define basic quantities of an event (i.e. things that
 can be read straight from a tree), and constructed quantities (i.e. things that can be constructed from the basic quantities).
 
-##### UserEventDictionaries
+The event dictionary contains, 3 important dictionaries, and then an important instance variable that
+contains the weight.
+
+#### UserEventDictionaries
+This is a convenient place to put your particular kind of event dictionary
 
 #### EventDictionary.py
+Contains the master class for event dictionaries. User event dictionaries will need to be instances 
+of this class.
 
 #### How do I write an event dictionary for the values that could be used to determine if an event is in a category?
+- Open a python file. At the top, import the event dictionary with: `from Samples.EventDefinition.EventDictionary import EventDictionary`
+- You will now need to define a function that takes two arguments. The first is the event dictionary 
+  object, and the second is the tree with the current entry loaded. The end result of this function 
+  must be to fill the `basicQuantitites` dictionary variable of the event dictionary object with a 
+  dictionary in VariableName:Value format for a nominal event read from the tree. It is important
+  to take note of these variable names, as they will be used later for reconstruction, rolling, 
+  uncertainties, and deciding if an event falls in a category or not.
+
+  Note: the point of this function is only to fill quantities that can be read directly from the 
+  tree! In the next step we will fill quantities that can be computed from these. This makes it
+  easy to propagate uncertainties on basic quantities to all apropriate quantities.
+  
+- You will now need to define a function that takes two arguments. The first is the event dictionary 
+  object and the second is the basic quantities dictionary you just defined filling. This function
+  will define filling the event dictionary object's `constructedQuantities` dictionary with variables
+  that you can get from the basic quantities (things like m_vis, etc.).
+  
+  The reason it is done this way is so that if a basic quantity changes for an uncertainty, we have a
+  predefined scheme for calculating the values that depend on it to see how they change.
+  
+- You will now need to create the dictionary instance, like so: `myEventDictionary =  EventDictionary()`
+- Set its `FillBasicQuantities` function to the first function you defined with   `myEventDictionary.FillBasicQuantities = FunctionOne`
+- Then Set its `FillConstructedQuantities` function to the second function you defined with: 
+  `myEventDictionary.FillConstructedQuantities = FunctionTwo`  
 
 ### Uncertainties
 This contains the template/master class for the uncertainties on samples. Each defined uncertainty must be a derived child of this class.
@@ -24,16 +56,39 @@ It will define the various up/down uncertainties related to the overall category
 and maintain a dictionary of functions used for modifying the nominal event dictionaries to use the uncertainty values.
 
 #### UserUncertainties
+Simply a convenient place to place all your user defined uncertainties
 
 #### UncertaintyDef.py
+Contains the parent class for uncertainties. All user defined uncertainties will need to *inherrit* 
+from this class, instead of simply being an instance of it. Uncertainties must be their own defined
+classes.
 
 #### How do I write my own uncertainty?
+- Open up a python file, and at the top import the parent uncertainty class with `from Samples.Uncertainties.UncertaintyDef import Uncertainty`
+- Uncertainties must be their own class that inherrits from `Uncertainty`, like so: `class myUncertainty(Uncertainty):`
+- The init function must set it's name (whatever is convenient and let's you understand it) with 
+  `self.name = "myUncertainty"`
+- The init function must write the names of the uncertainties *as read by Combine* associated with 
+  this source of uncertainty into a list assigned to `self.uncertaintyNames`
+- The init function must also create a dictionary `self.eventDictionaryModifications = {...}`.
+  This dictionary must be filled with uncertainty names as defined above in the keys, and for values
+  it will take class defined functions for how to calculate a modified event dictionary associated 
+  with the uncertainty. That is, the dictionary will be in "{uncertaintyName:self.function}" form.
+- Next you will have to create a bunch of functions associated with the class that will define how 
+  to calculate a modified version of the event dictionary associated with the particular uncertainty.
+  These functions will take three arguments, "self",theTree with the entry loaded, and the nominal 
+  event dictionary associated with the event. To make a copy of the nominal event dictionary just do
+  `modifiedEventDictionary = nominalEventDictionary.Clone()`. Basic quantities can then be modified,
+  and the event dictionary `FillConstructedQuantities()` function can then be called on it.
+  remember, if your uncertainty
 
 ### SampleDefintion.py
 Contains the master sample configuration class
 
 ### UserSamples
-This is just a convenient place to put final user created 
+This is just a convenient place to put final user created sample configurations
+
+### How do I write a final sample configuration file to use in datacards?
 
 ## AnalysisCategories
 This contains the template/master analysis category class, as well as any speicifc user defined classes. 
@@ -52,7 +107,7 @@ Just a convenient place to place userdefined analysis categories
 the current paramters of the event, or event modified for uncertainty (I call them theAnalysisCategory and 
 theEventDictionary) This function must return true if the current considered event dictionary would place it inside 
 this category, and false otherwise. Please check some current existing category configurations for examples of
-how to do this.
+how to do this. Unfortunately I suffered a lapse in judgement and called the final compiled dictionary that contains all event information `eventDictionary` inside of the `EventDictionary` class.
 - Next create the instance of the analysis category class with: `myAnalysisCategory = AnalysisCategoryDef.AnalysisCategory()`
 - Set the category name (will show up in the root file as the directory name), with `myAnalysisCategory.name = theName`
 - Set the function that has the criteria for being a part of this category with `myAnalysisCategory.IsInCategory = myFunction`
@@ -60,6 +115,17 @@ how to do this.
 - Set the bin boundaries for the rolling variable like so: `myAnalysisCategory.rollingBins = [HistogramLowEdge,bin_edge_1,bin_edge_2,bin_edge_3,...HistogramHighEdge]`
 - set the reconstructionvariables and bins the same way with `reconstructionVariable` and `reconstructionBins` 
 
-
 ## Utilities
 Contains various utility things for the data card creator, the loader and unroller.
+
+## CreateDatacard.py
+
+## Disclaimer
+This code is thorough, but not particularly efficient. I am working on increasing the efficiency, but 
+until such time, I find it best to run these commands in a tmux session. I also, unfortunately do not
+have much better advice for you than to use as many cores and resources as you resonably can in tmux 
+to get the run time down, and hadd the files together at the end. You may also see in some random 
+assorted scripts left around the repository, and from some configurations I've included, my attempts
+at parallelization inside of tmux.
+
+If you have any ideas or improvements, I would love for the use of this tool to extend beyond me, so let me know or open a PR.
