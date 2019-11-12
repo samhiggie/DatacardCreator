@@ -18,8 +18,8 @@ class Uncertainty():
                 dictionaryOfHistograms[name] = newClonedHisto
             self.histograms[analysisCategory.name]=dictionaryOfHistograms
     def ProcessAllHistograms(self,analysisCategories,theTree,nominalEventDictionary):
-        for category in analysisCategories:
-            for name in self.uncertaintyNames:
-                uncertaintyDictionary = self.eventDictionaryModifications[name](theTree,nominalEventDictionary)
+        for name in self.uncertaintyNames:
+            uncertaintyDictionary = self.eventDictionaryModifications[name](theTree,nominalEventDictionary)
+            for category in analysisCategories:
                 if category.IsInCategory(category,uncertaintyDictionary):
                     self.histograms[category.name][name].Fill(uncertaintyDictionary.eventDictionary[category.reconstructionVariable],uncertaintyDictionary.eventDictionary[category.rollingVariable],uncertaintyDictionary.Weight)
