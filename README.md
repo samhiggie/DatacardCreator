@@ -1,6 +1,9 @@
 # DatacardCreator
 My general purpose, python configured histogram based data card creator.
 
+In general: I very much recommend looking at some of my personally used configurations set up around the repository to learn how to make 
+your own.
+
 ## Samples
 This contains the template/master class for the samples. These samples will define the basic paramater of each sample to be considered by combine
 and contain/be responsible for the uncertainties on the sample. It also handles the nominal histogram for its sample.
@@ -15,7 +18,7 @@ This contains the template/master event dictionary class. This class's responsib
 can be read straight from a tree), and constructed quantities (i.e. things that can be constructed from the basic quantities).
 
 The event dictionary contains, 3 important dictionaries, and then an important instance variable that
-contains the weight.
+contains the weight. 
 
 #### UserEventDictionaries
 This is a convenient place to put your particular kind of event dictionary
@@ -80,7 +83,12 @@ classes.
   event dictionary associated with the event. To make a copy of the nominal event dictionary just do
   `modifiedEventDictionary = nominalEventDictionary.Clone()`. Basic quantities can then be modified,
   and the event dictionary `FillConstructedQuantities()` function can then be called on it.
-  remember, if your uncertainty
+  remember, if your uncertainty has modified any basic quantities, you should call 
+  `modifiedEventDictionary.FillContstructedQuantities(...)` and `modifiedEventDictionary.CompileCompleteDictionary()`
+  to set the dictionary up properly. If you have only modified the weight, `modifiedEventDictionary.Weight`, this is not
+  necessary
+  
+  remember to return the modified dictionary at the end of the function
 
 ### SampleDefintion.py
 Contains the master sample configuration class
@@ -89,6 +97,23 @@ Contains the master sample configuration class
 This is just a convenient place to put final user created sample configurations
 
 ### How do I write a final sample configuration file to use in datacards?
+- Open up a python file. At the top, import the sample definition `from Samples.SampleDefinition import Sample`
+- Also, import all of the various uncertainties that your sample will need.
+- Finally, import the event dictionary that contains the directions to import/make all the values your analysis will need.
+- Make an instance of a sample `mySample = Sample()`
+- Set it's name with `mySample.name`. This is the name of the nominal histogram as used in combine, `ZL`
+- (optional) set the path to look to look for files in with `mySample.path`. This can help keep the files list in the next step 
+  easier to manage
+- Set the files to create the sample and histograms from with `mySample.files = ["File1.root","File2.root"...]`
+- If your sample needs to only be a subset of the trees contained in the files, you can write a cut string with `mySample.definition`.
+  I find this useful to filter by gen match or STXS bin for example.
+- Next, add instances of all the uncertainties on your sample with `mySample.uncertainties = [myUncertaintyOne(),myUncertaintyTwo()...]`
+- set the type of event dictionary the event will use with `mySample.eventDictionaryInstance = myEventDictionary`
+- Finally, you will need to set a function to `mySample.CreateEventWeight`that will tell the event dictionary how to nominally weight 
+  the event. A few default options are included in the sample code by default designed to work with my weighting code. There is 
+  `mySample.CreateEventWeight_Standard` (so you would do `mySample.CreateEventWeight = mySample.CreateEventWeight_Standard`) which
+  simply looks for a branch in the tree called `FinalWeighting` and nominally weights the event by this. There is also 
+  `CreateEventWeight_Fake` which weights the event by `FinalWeighting` mulitplied by a branch in the tree called `Event_Fake_Factor`
 
 ## AnalysisCategories
 This contains the template/master analysis category class, as well as any speicifc user defined classes. 
@@ -119,6 +144,13 @@ how to do this. Unfortunately I suffered a lapse in judgement and called the fin
 Contains various utility things for the data card creator, the loader and unroller.
 
 ## CreateDatacard.py
+This is the main driving script for creating datacards.
+
+### Options
+- `--AnalysisConfigFiles`: (required) takes any number of arguments, should be the analysis config files. Supports wildcarding
+- `--SampleConfigFiles`: (required) takes any number of arguments, should the sample config files. Supports wildcarding.
+- `--OutputFileName`: (Optional but recommended) provides the name for the final datacard file created. Otherwise it uses a default name
+  of "NewDatacard.root"
 
 ## Disclaimer
 This code is thorough, but not particularly efficient. I am working on increasing the efficiency, but 
